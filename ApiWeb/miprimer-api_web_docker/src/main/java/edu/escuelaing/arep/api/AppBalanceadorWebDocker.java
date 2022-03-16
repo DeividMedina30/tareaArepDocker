@@ -4,7 +4,7 @@ package edu.escuelaing.arep.api;
  * Hello world!
  *
  */
-public class App 
+public class AppBalanceadorWebDocker
 {
     public static void main( String[] args )
     {
