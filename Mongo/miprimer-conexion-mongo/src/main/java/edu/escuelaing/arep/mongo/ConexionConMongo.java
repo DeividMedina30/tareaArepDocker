@@ -16,7 +16,7 @@ import org.bson.*;
 public class ConexionConMongo
 {
     private static SimpleDateFormat fechaDelDato = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-    private static MongoCliente clienteMongo;
+    private static MongoClient clienteMongo;
     private static MongoDatabase database;
     private static MongoCollection<Document> coleccionDatos;
     private static ArrayList<String> respuesta = new ArrayList<>();
@@ -25,7 +25,7 @@ public class ConexionConMongo
         port(getPort());
         post("/",(req, res)->{
             res.type("application/json");
-            return insert(req.queryParams("value"));
+            return conexionMongo(req.queryParams("value"));
         });
     }
 
@@ -38,20 +38,20 @@ public class ConexionConMongo
             Document updated = new Document().append("$inc", new Document().append("id", -1));
             coleccionDatos.updateMany(Filters.gt("id",0),updated);
         }
-        insertarDatoMongo();
+        insertarDatoMongo(palabra);
         mostrarDatosMongo();
         clienteMongo.close();
         return Arrays.toString(respuesta.toArray(new String[respuesta.size()]));
     }
 
-    private static void insertarDatoMongo(){
+    private static void insertarDatoMongo(String palabra){
         //insertOne(), se utiliza para insertar un solo documento o registro en la base de datos.
         coleccionDatos.insertOne(new Document().append("fecha",fechaDelDato.format(new Date())).append("value", palabra).append("id",(int)coleccionDatos.countDocuments()));
     }
 
     private static void mostrarDatosMongo(){
         // forEach en MongoDB, nos permite recorrer los documentos de una consulta de una forma sencilla y sin tener que realizar un bucle.
-        coleccionDatos.find().forEach((Consumer<Document>) (Document d) -> { d.remove("_id");d.remove("id");res.add(d.toJson());});
+        coleccionDatos.find().forEach((Consumer<Document>) (Document d) -> { d.remove("_id");d.remove("id");respuesta.add(d.toJson());});
     }
 
     static int getPort() {
