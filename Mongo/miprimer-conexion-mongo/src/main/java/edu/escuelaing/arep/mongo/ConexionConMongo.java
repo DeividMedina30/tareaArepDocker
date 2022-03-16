@@ -48,10 +48,12 @@ public class App
     }
 
     private static void insertarDatoMongo(){
+        //insertOne(), se utiliza para insertar un solo documento o registro en la base de datos.
         coleccionDatos.insertOne(new Document().append("fecha",fechaDelDato.format(new Date())).append("value", palabra).append("id",(int)coleccionDatos.countDocuments()));
     }
 
     private static void mostrarDatosMongo(){
+        // forEach en MongoDB, nos permite recorrer los documentos de una consulta de una forma sencilla y sin tener que realizar un bucle.
         coleccionDatos.find().forEach((Consumer<Document>) (Document d) -> { d.remove("_id");d.remove("id");res.add(d.toJson());});
     }
 
