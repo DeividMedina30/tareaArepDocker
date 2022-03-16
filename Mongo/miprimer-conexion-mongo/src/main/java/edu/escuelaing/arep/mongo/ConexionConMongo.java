@@ -12,11 +12,8 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import org.bson.*;
 
-/**
- * Hello world!
- *
- */
-public class App 
+
+public class ConexionConMongo
 {
     private static SimpleDateFormat fechaDelDato = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
     private static MongoCliente clienteMongo;
