@@ -1,1 +1,53 @@
-"Hola" 
+version: '2'
+
+services:
+  backend1:
+    environment:
+      - PORT=35001
+    build:
+      context: ./Mongo
+      dockerfile: Dockerfile
+    container_name: back1
+    links:
+      - db
+  backend2:
+    environment:
+      - PORT=35002
+    build:
+      context: ./Mongo
+      dockerfile: Dockerfile
+    container_name: back2
+    links:
+      - db
+  backend3:
+    environment:
+      - PORT=35003
+    build:
+      context: ./Mongo
+      dockerfile: Dockerfile
+    container_name: back3
+    links:
+      - db
+  balance:
+    environment:
+      - PORT=35000
+    build:
+      context: ./ApiWeb
+      dockerfile: Dockerfile
+    container_name: balance
+    ports:
+      - "35000:35000"
+    links:
+      - backend1
+      - backend2
+      - backend3
+  db:
+    image: mongo:3.6.1
+    container_name: db
+    volumes:
+      - mongodb:/data/db
+      - mongodb_config:/data/configdb
+    command: mongod
+volumes:
+  mongodb:
+  mongodb_config:
