@@ -1,10 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <script src="js/submit.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/index.css"/>
+    <title>Api conexión MongoDB y Docker</title>
+    <h1>Api conexión MongoDB y Docker</h1>
 </head>
 <body>
-
+    <form>
+        <div class="elem-group">
+            <p>
+                La api permite que el usuario ingrese una palabra, la cual va a ser almacenada en una base de datos MongoDB.
+                Se mostrará el registro de las últimas 10 palabras ingresadas.
+            </p>
+            <br>
+        </div>
+        <div class="elem-group">
+            <input id="idtextopalabra" type="text" placeholder="Ingrese la palabra a almacenar." class="palabraInput"/>
+            <button onclick="subirPalabra()"> Insertar Palabra  </button>
+            <br>
+        </div>
+        <div class="tablaMongoDB">
+            <h3>Ultimas 10 palabras almacenadas en MongoDB</h3>
+            <table id="tablaMongo">
+                <tr>
+                    <th>Fecha Creación.</th>
+                    <th>Palabra Almacenada.</th>
+                </tr>
+            </table>
+        </div>
+    </form>
 </body>
 </html>
