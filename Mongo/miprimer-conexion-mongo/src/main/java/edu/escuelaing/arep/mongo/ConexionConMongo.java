@@ -12,6 +12,8 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import org.bson.*;
 
+import javax.swing.*;
+
 
 public class ConexionConMongo
 {
@@ -30,17 +32,21 @@ public class ConexionConMongo
     }
 
     private static String conexionMongo(String palabra){
-        clienteMongo = new MongoClient("database");
-        database = clienteMongo.getDatabase("Lista");
-        coleccionDatos = database.getCollection("datos");
-        if(coleccionDatos.countDocuments()==10){ // Mirar si hay al menos diez datos, si hay más de diez eliminar dato.
-            coleccionDatos.deleteOne(Filters.eq("id",0));
-            Document updated = new Document().append("$inc", new Document().append("id", -1));
-            coleccionDatos.updateMany(Filters.gt("id",0),updated);
+        try {
+            clienteMongo = new MongoClient("database");
+            database = clienteMongo.getDatabase("Lista");
+            coleccionDatos = database.getCollection("datos");
+            if(coleccionDatos.countDocuments()==10){ // Mirar si hay al menos diez datos, si hay más de diez eliminar dato.
+                coleccionDatos.deleteOne(Filters.eq("id",0));
+                Document updated = new Document().append("$inc", new Document().append("id", -1));
+                coleccionDatos.updateMany(Filters.gt("id",0),updated);
+            }
+            insertarDatoMongo(palabra);
+            mostrarDatosMongo();
+            clienteMongo.close();
+        }catch (MongoException e){
+            JOptionPane.showMessageDialog(null,"Error con la conexión de la base de datos MongoDB, error: " + e.toString());
         }
-        insertarDatoMongo(palabra);
-        mostrarDatosMongo();
-        clienteMongo.close();
         return Arrays.toString(respuesta.toArray(new String[respuesta.size()]));
     }
 
