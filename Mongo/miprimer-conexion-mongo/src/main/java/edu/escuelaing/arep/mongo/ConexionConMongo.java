@@ -33,7 +33,7 @@ public class ConexionConMongo
 
     private static String conexionMongo(String palabra){
         try {
-            clienteMongo = new MongoClient("database");
+            clienteMongo = new MongoClient("db");
             database = clienteMongo.getDatabase("Lista");
             coleccionDatos = database.getCollection("datos");
             if(coleccionDatos.countDocuments()==10){ // Mirar si hay al menos diez datos, si hay más de diez eliminar dato.
