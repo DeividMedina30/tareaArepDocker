@@ -5,7 +5,7 @@ services:
     environment:
       - PORT=35001
     build:
-      context: ./Mongo
+      context: ./Mongo/miprimer-conexion-mongo
       dockerfile: Dockerfile
     container_name: back1
     links:
@@ -14,7 +14,7 @@ services:
     environment:
       - PORT=35002
     build:
-      context: ./Mongo
+      context: ./Mongo/miprimer-conexion-mongo
       dockerfile: Dockerfile
     container_name: back2
     links:
@@ -23,7 +23,7 @@ services:
     environment:
       - PORT=35003
     build:
-      context: ./Mongo
+      context: ./Mongo/miprimer-conexion-mongo
       dockerfile: Dockerfile
     container_name: back3
     links:
@@ -32,7 +32,7 @@ services:
     environment:
       - PORT=35000
     build:
-      context: ./ApiWeb
+      context: ./ApiWeb/miprimer-api_web_docker
       dockerfile: Dockerfile
     container_name: balance
     ports:
